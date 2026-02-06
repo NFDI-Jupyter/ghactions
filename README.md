@@ -14,9 +14,9 @@ Add Jupyter4NFDI badges to your GitHub README.md:
   
 ## Test notebooks
 With this simple Action you can check if your repository and all notebooks inside are running on Jupyter4NFDI.  
-1. Visit https://hub.nfdi-jupyter.de/hub/token , Log in and create a token for the GitHub Action.
+1. Visit https://hub.nfdi-jupyter.de/hub/token , log in and create a token for the GitHub Action.
 2. In your GitHub Repo browse to Settings -> Environments -> New Environment -> Name: jupyter4nfdi -> Add environment secret -> Secret Name: JUPYTERHUB_API_TOKEN, Value: token from first step
-3. In your GitHub Repo browse to Actions -> "set up a workflow yourself" -> Copy this text into it:
+3. In your GitHub Repo browse to Actions -> "set up a workflow yourself" -> Copy the following text into it and click on "Commit changes" in the top right corner.
   
 ```
 name: Runs on Jupyter4NFDI
