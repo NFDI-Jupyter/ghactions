@@ -1,4 +1,4 @@
-![Runs on Jupyter4NFDI](https://github.com/NFDI-Jupyter/ghactions/actions/workflows/notebooks.yml/badge.svg) [![NFDI](https://nfdi-jupyter.de/images/nfdi_badge.svg)](https://hub.nfdi-jupyter.de/v2/gh/NFDI-Jupyter/ghactions/HEAD)
+![Runs on Jupyter4NFDI](https://github.com/NFDI-Jupyter/ghactions/actions/workflows/notebooks.yaml/badge.svg) [![NFDI](https://nfdi-jupyter.de/images/nfdi_badge.svg)](https://hub.nfdi-jupyter.de/v2/gh/NFDI-Jupyter/ghactions/HEAD)
 
 # Jupyter4NFDI GitHub Actions
   
@@ -8,7 +8,7 @@ This repository contains the currently supported Jupyter4NFDI GitHub Actions.
 
 Add Jupyter4NFDI badges to your GitHub README.md:  
 ```
-![Jupyter4NFDI approved](https://github.com/_repoowner_/_repotype_/actions/workflows/_actionname_.yml/badge.svg)
+![Jupyter4NFDI approved](https://github.com/_repoowner_/_repotype_/actions/workflows/main.yml/badge.svg)
 [![NFDI](https://nfdi-jupyter.de/images/nfdi_badge.svg)](https://hub.nfdi-jupyter.de/v2/gh/_repoowner_/_repotype_/_ref_)
 ```  
   
