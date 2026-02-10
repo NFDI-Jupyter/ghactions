@@ -15,6 +15,5 @@ jobs:
         with:
           repo: ${{ github.repository }}
           ref: ${{ github.ref_name }}
-          api_url: https://hub-staging.nfdi-jupyter.de/hub/api/job
           notebook_dirs: '["notebooks"]' # Only check specific folders in your repo
           token: ${{ secrets.JUPYTERHUB_API_TOKEN }}
