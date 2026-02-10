@@ -43,6 +43,7 @@ def main():
     ref = os.environ.get("INPUT_REF", "HEAD")
     api_url = os.environ["INPUT_API_URL"].rstrip("/")
     token = os.environ["INPUT_TOKEN"]
+    user_options = os.environ.get("INPUT_USER_OPTIONS", "")
     notebook_dirs_raw = os.environ.get("INPUT_NOTEBOOK_DIRS", "")
     notebook_dirs = parse_notebook_dirs(notebook_dirs_raw)
 
@@ -54,6 +55,7 @@ def main():
 
     payload = {
         "user_options": {
+            "name": f"GitHub Action: {repo}@{ref}",
             "option": "repo2docker",
             "repo2docker": {
                 "repotype": "gh",
@@ -62,6 +64,11 @@ def main():
             },
         }
     }
+    try:
+        payload["user_options"].update(json.loads(user_options) if user_options else {})
+    except json.JSONDecodeError as e:
+        print(f"Error parsing user_options as JSON: {e}")
+        sys.exit(1)
 
     if notebook_dirs:
         payload["notebook_dirs"] = notebook_dirs
@@ -70,6 +77,9 @@ def main():
     for i in range(5):
         try:
             resp = requests.post(api_url, headers=headers, json=payload, timeout=10)
+            if resp.status_code == 400:
+                print(f"Bad request (400): {resp.text}")
+                sys.exit(1)
             resp.raise_for_status()
             break
         except Exception as e:
