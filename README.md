@@ -1,4 +1,4 @@
-[![Runs on Jupyter4NFDI](https://github.com/NFDI-Jupyter/ghactions/actions/workflows/notebooks.yaml/badge.svg)](https://hub.nfdi-jupyter.de/v2/gh/NFDI-Jupyter/ghactions/workingexample)
+[![Runs on Jupyter4NFDI](https://github.com/NFDI-Jupyter/ghactions/actions/workflows/notebooks.yaml/badge.svg?branch=workingexample)](https://hub.nfdi-jupyter.de/v2/gh/NFDI-Jupyter/ghactions/workingexample)
 
 
 # Jupyter4NFDI GitHub Actions
