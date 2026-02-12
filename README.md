@@ -1,4 +1,4 @@
-![Runs on Jupyter4NFDI](https://github.com/NFDI-Jupyter/ghactions/actions/workflows/notebooks.yaml/badge.svg) [![NFDI](https://nfdi-jupyter.de/images/nfdi_badge.svg)](https://hub.nfdi-jupyter.de/v2/gh/NFDI-Jupyter/ghactions/HEAD)
+[![Runs on Jupyter4NFDI](https://github.com/NFDI-Jupyter/ghactions/actions/workflows/notebooks.yaml/badge.svg)](https://hub.nfdi-jupyter.de/v2/gh/NFDI-Jupyter/ghactions/HEAD)
 
 
 # Jupyter4NFDI GitHub Actions
@@ -7,12 +7,13 @@
   
 This repository contains the currently supported Jupyter4NFDI GitHub Actions.
 
-Add Jupyter4NFDI badges to your GitHub README.md:  
+Add a Jupyter4NFDI badge to your GitHub README.md:  
 ```
-![Jupyter4NFDI approved](https://github.com/_repoowner_/_repotype_/actions/workflows/main.yml/badge.svg)
-[![NFDI](https://nfdi-jupyter.de/images/nfdi_badge.svg)](https://hub.nfdi-jupyter.de/v2/gh/_repoowner_/_repotype_/_ref_)
+[![Jupyter4NFDI approved](https://github.com/_repoowner_/_repotype_/actions/workflows/main.yml/badge.svg)](https://hub.nfdi-jupyter.de/v2/gh/_repoowner_/_repotype_/HEAD)
 ```  
-  
+
+Clicking on the Badge will launch your repository on Jupyter4NFDI.  
+
 ## Test notebooks
 With this simple Action you can check if your repository and all notebooks inside are running on Jupyter4NFDI.  
 1. Visit https://hub.nfdi-jupyter.de/hub/token , log in and create a token for the GitHub Action.
