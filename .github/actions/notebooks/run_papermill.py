@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import json
 import os
-import signal
 import sys
 import time
 
@@ -9,32 +8,6 @@ import requests
 
 POLL_INTERVAL = int(os.environ.get("INPUT_POLL_INTERVAL", 10))
 MAX_WAIT = int(os.environ.get("INPUT_MAX_WAIT", 3600))  # seconds
-
-job_url = None
-job_done = False
-job_cancelled = False
-
-def cleanup(*_):
-    global job_url, job_done, job_cancelled
-    if job_done:
-        return  # nothing to clean
-
-    job_cancelled = True
-    if job_url:
-        token = os.environ["INPUT_TOKEN"]
-        headers = {"Authorization": f"token {token}"}
-
-        try:
-            r = requests.delete(job_url, headers=headers, timeout=10)
-            r.raise_for_status()
-            print("Job cancelled via cleanup")
-        except Exception as e:
-            print(f"Could not delete job: {e}")
-
-    os._exit(130)
-
-signal.signal(signal.SIGTERM, cleanup)
-signal.signal(signal.SIGINT, cleanup)
 
 def parse_logs_as_json(logs):
     """
@@ -65,7 +38,6 @@ def parse_notebook_dirs(value):
 
 
 def main():
-    global job_url, job_done, job_cancelled
     repo = os.environ["INPUT_REPO"]
     ref = os.environ.get("INPUT_REF", "HEAD")
     api_url = os.environ["INPUT_API_URL"].rstrip("/")
@@ -117,9 +89,6 @@ def main():
                 )
                 sys.exit(1)
             time.sleep(60)
-            if job_cancelled:
-                print("Job already cancelled. Abort")
-                sys.exit(1)
 
     job_url = resp.headers.get("Location")
     if not job_url:
@@ -127,6 +96,8 @@ def main():
         sys.exit(1)
 
     print(f"Job URL: {job_url}")
+    with open("/tmp/job_url.txt", "w") as f:
+        f.write(job_url)
 
     start = time.time()
     fail_counter = 0
@@ -137,10 +108,6 @@ def main():
             sys.exit(1)
 
         time.sleep(POLL_INTERVAL)
-
-        if job_cancelled:
-            print("Job already cancelled, exiting poll loop")
-            break
         
         try:
             status_resp = requests.get(job_url, headers=headers, timeout=10)
@@ -181,7 +148,6 @@ def main():
         exit_code = data.get("exit_code", 1)
 
     print("===================================")
-    job_done = True
     if exit_code != 0:
         print(f"Papermill job failed (exitCode={exit_code})")
 
