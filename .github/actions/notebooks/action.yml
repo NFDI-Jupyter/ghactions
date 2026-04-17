@@ -60,3 +60,9 @@ runs:
         INPUT_USER_OPTIONS: ${{ inputs.user_options }}
         INPUT_POLL_INTERVAL: ${{ inputs.poll_interval }}
         INPUT_MAX_WAIT: ${{ inputs.max_wait }}
+    - name: Cancel Papermill job if needed
+      if: always()
+      run: python ${{ github.action_path }}/cleanup.py
+      shell: bash
+      env:
+        INPUT_TOKEN: ${{ inputs.token }}
