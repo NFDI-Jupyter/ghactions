@@ -122,6 +122,7 @@ def main():
             fail_counter = 0
 
         data = status_resp.json()
+        status = data.get("status")
         print(f"Job status: {status}")
 
         if status == "stopped":
