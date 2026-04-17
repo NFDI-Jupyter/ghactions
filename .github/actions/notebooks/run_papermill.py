@@ -102,9 +102,10 @@ def main():
     start = time.time()
     fail_counter = 0
     data = {}
+    prev_status = None
     while True:
         if time.time() - start > MAX_WAIT:
-            print("Timeout waiting for Papermill job")
+            print("\nTimeout waiting for Papermill job")
             sys.exit(1)
 
         time.sleep(POLL_INTERVAL)
@@ -113,10 +114,11 @@ def main():
             status_resp = requests.get(job_url, headers=headers, timeout=10)
             status_resp.raise_for_status()
         except Exception as e:
-            print(f"Error fetching job status: {e}")
+            print(f"\nError fetching job status: {e}")
+            prev_status = None
             fail_counter += 1
             if fail_counter >= 5:
-                print("Too many consecutive failures fetching job status, aborting")
+                print("\nToo many consecutive failures fetching job status, aborting")
                 sys.exit(1)
             continue
         else:
@@ -125,7 +127,11 @@ def main():
         data = status_resp.json()
 
         status = data.get("status")
-        print(f"Job status: {status}")
+        if status is not None and status == prev_status:
+            print(".", end="", flush=True)
+        else:
+            prev_status = status
+            print(f"\nJob status: {status}", end=" ", flush=True)
 
         if status == "stopped":
             break
@@ -135,7 +141,7 @@ def main():
 
     parsed_logs, raw_logs = parse_logs_as_json(logs)
 
-    print("\n========== PAPERMILL LOGS ==========")
+    print("\n\n========== PAPERMILL LOGS ==========")
 
     if parsed_logs:
         print(json.dumps(parsed_logs, indent=2))
