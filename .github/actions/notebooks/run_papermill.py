@@ -128,10 +128,10 @@ def main():
 
         status = data.get("status")
         if status is not None and status == prev_status:
-            print(".", end="", flush=True)
+            print(".", end="")
         else:
             prev_status = status
-            print(f"\nJob status: {status}", end=" ", flush=True)
+            print(f"\nJob status: {status}", end=" ")
 
         if status == "stopped":
             break
