@@ -123,7 +123,10 @@ def main():
 
         data = status_resp.json()
         status = data.get("status")
-        print(f"Job status: {status}")
+        if status == "preparing":
+            print(f"Building image ..")
+        else:
+            print(f"Job status: {status}")
 
         if status == "stopped":
             break
