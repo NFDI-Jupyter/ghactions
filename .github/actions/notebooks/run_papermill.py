@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import os
+import re
 import sys
 import time
 
@@ -145,8 +146,19 @@ def main():
         exit_code = parsed_logs.get("exitCode", data.get("exit_code", 1))
     else:
         # Fallback: plain text logs
-        print(raw_logs.replace("\\n", "\n").replace("\\u2588", "█"))
-        exit_code = data.get("exit_code", 1)
+        raw = raw_logs.replace("\\n", "\n").replace("\\u2588", "█")
+        print(raw)
+        exit_code = None
+
+        for line in raw.split("\n"):
+            match = re.search(r'^  "exitCode":\s*(\d+),?$', line)
+            if match:
+                exit_code = int(match.group(1))
+                break
+
+        if exit_code is None:
+            exit_code = 117
+            print("Could not parse result into json and could not find exitCode in raw text.")
 
     print("===================================")
     if exit_code != 0:
